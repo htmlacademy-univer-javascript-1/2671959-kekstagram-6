@@ -29,3 +29,34 @@ checkPalindrome('ДовОд'); // true
 checkPalindrome('Кекс');  // false
 // Это палиндром
 checkPalindrome('Лёша на полке клопа нашёл '); // true
+
+
+//Задание 3
+function extractNumber(arg) {
+  const str = arg.toString();
+  let result = '';
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (char >= '0' && char <= '9') {
+      result += char;
+    }
+  }
+
+  if (result.length > 0) {
+    return parseInt(result, 10);
+  }
+
+  return NaN;
+}
+
+// Примеры использования:
+extractNumber('2023 год');           // 2023
+extractNumber('ECMAScript 2022');    // 2022
+extractNumber('1 кефир, 0.5 батона'); // 105
+extractNumber('агент 007');          // 7
+extractNumber('a я томат');          // NaN
+extractNumber(2023);                 // 2023
+extractNumber(-1);                   // 1
+extractNumber(1.5);                  // 15
