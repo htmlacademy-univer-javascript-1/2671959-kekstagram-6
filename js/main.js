@@ -79,14 +79,15 @@ const generatePhotos = () => {
   const photos = [];
 
   for (let i = 1; i <= PICTURES_AMT; i++) {
-    const commentsCount = getRandomInteger(0, COMMENTS_AMT);
-
     photos.push({
       id: i,
       url: `photos/${i}.jpg`,
       description: getRandomArrayElement(DESCRIPTIONS),
       likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-      comments: generateComments(commentsCount)
+      comments: Array.from(
+        { length: getRandomInteger(0, COMMENTS_AMT) },
+        generateComments,
+      )
     });
   }
 
