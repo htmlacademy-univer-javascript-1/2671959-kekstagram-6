@@ -60,3 +60,24 @@ extractNumber('a я томат');          // NaN
 extractNumber(2023);                 // 2023
 extractNumber(-1);                   // 1
 extractNumber(1.5);                  // 15
+
+// Делу - время
+const workTime = (start, end, meeting, meetingDuration) => {
+  const timeToMinutes = (timeStr) => {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
+  };
+
+  const startMinutes = timeToMinutes(start);
+  const endMinutes = timeToMinutes(end);
+  const meetingMinutes = timeToMinutes(meeting);
+  const meetingEndMinutes = meetingMinutes + meetingDuration;
+
+  return meetingMinutes >= startMinutes && meetingEndMinutes <= endMinutes;
+};
+
+workTime('08:00', '17:30', '14:00', 90); // true
+workTime('8:0', '10:0', '8:0', 120);     // true
+workTime('08:00', '14:30', '14:00', 90); // false
+workTime('14:00', '17:30', '08:0', 90);  // false
+workTime('8:00', '17:30', '08:00', 900); // false
