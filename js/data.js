@@ -1,5 +1,5 @@
-import {getRandomArrayElement} from './util.js';
-import {getRandomInteger} from './util.js';
+import { getRandomArrayElement } from './util.js';
+import { getRandomInteger } from './util.js';
 
 const AVATAR_AMT = 6;
 const PICTURES_AMT = 25;
@@ -88,4 +88,4 @@ const generatePhotos = () => {
   return photos;
 };
 
-export {generatePhotos};
+export { generatePhotos };
