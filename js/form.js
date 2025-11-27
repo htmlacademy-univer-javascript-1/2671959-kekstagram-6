@@ -1,8 +1,6 @@
 import { isEscapeKey } from './util.js';
-
-const MAX_HASHTAG_SYMBOLS = 20;
-const MAX_COMMENT_SYMBOLS = 140;
-const MAX_HASHTAGS = 5;
+import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_HASHTAGS} from './consts.js';
+import { initSlider, resetSlider } from './slider.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -60,8 +58,8 @@ const validateHashtags = (value) => {
     },
     {
       check: hashtags.some((hashtag, index, array) =>
-        array.indexOf(hashtag.toLowerCase(), index + 1) > -1
-      ),
+        array.some((otherHashtag, otherIndex) =>
+          otherIndex !== index && otherHashtag.toLowerCase() === hashtag.toLowerCase())),
       error: 'Хэш-теги не должны повторяться'
     }
   ];
@@ -109,11 +107,13 @@ pristine.addValidator(
 const openForm = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  initSlider();
 };
 
 const closeForm = () => {
   imgUploadForm.reset();
   pristine.reset();
+  resetSlider();
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 };
