@@ -1,0 +1,12 @@
+import { fetchPhotos } from './fetch.js';
+import { showAlert } from './util.js';
+import { renderPhotos } from './photos.js';
+import './form.js';
+
+fetchPhotos()
+  .then((photos) => {
+    renderPhotos(photos);
+  })
+  .catch((error) => {
+    showAlert(error.message);
+  });
