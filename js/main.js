@@ -1,5 +1,12 @@
-import { generatePhotos } from './data.js';
+import { fetchPhotos } from './fetch.js';
+import { showAlert } from './util.js';
 import { renderPhotos } from './photos.js';
 import './form.js';
 
-renderPhotos(generatePhotos());
+fetchPhotos()
+  .then((photos) => {
+    renderPhotos(photos);
+  })
+  .catch((error) => {
+    showAlert(error.message);
+  });
