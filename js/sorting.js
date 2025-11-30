@@ -1,13 +1,12 @@
 import { debounce } from './util.js';
 import { renderPhotos } from './photos.js';
+import { RANDOM_PHOTOS_COUNT } from './consts.js';
 
 const FilterType = {
   DEFAULT: 'default',
   RANDOM: 'random',
   DISCUSSED: 'discussed'
 };
-
-const RANDOM_PHOTOS_COUNT = 10;
 
 const filtersContainer = document.querySelector('.img-filters');
 const filterButtons = filtersContainer.querySelectorAll('.img-filters__button');
