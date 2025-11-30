@@ -20,9 +20,16 @@ const renderPhoto = (picture) => {
   return pictureElement;
 };
 
-const fragment = document.createDocumentFragment();
+const clearPhotos = () => {
+  const existingPhotos = pictures.querySelectorAll('.picture');
+  existingPhotos.forEach((photo) => photo.remove());
+};
 
 const renderPhotos = (objects) => {
+  clearPhotos();
+
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < objects.length; i++) {
     fragment.appendChild(renderPhoto(objects[i]));
   }
