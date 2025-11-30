@@ -1,0 +1,33 @@
+const COMMENTS_PER_STEP = 5;
+
+const MAX_HASHTAG_SYMBOLS = 20;
+const MAX_COMMENT_SYMBOLS = 140;
+const MAX_HASHTAGS = 5;
+
+const SCALE_STEP = 25;
+const SCALE_MIN = 25;
+const SCALE_MAX = 100;
+const SCALE_DEFAULT = 100;
+
+const ALERT_SHOW_TIME = 5000;
+
+const SERVER_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
+
+const RANDOM_PHOTOS_COUNT = 10;
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+export {
+  COMMENTS_PER_STEP,
+  MAX_HASHTAG_SYMBOLS,
+  MAX_COMMENT_SYMBOLS,
+  MAX_HASHTAGS,
+  SCALE_STEP,
+  SCALE_MIN,
+  SCALE_MAX,
+  SCALE_DEFAULT,
+  ALERT_SHOW_TIME,
+  SERVER_URL,
+  RANDOM_PHOTOS_COUNT,
+  FILE_TYPES
+};
