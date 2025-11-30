@@ -3,6 +3,7 @@ import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_HASHTAGS} from './consts.j
 import { initSlider, resetSlider } from './slider.js';
 import { uploadPhoto } from './fetch.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
+import { initUserImage } from './users-image.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -194,6 +195,7 @@ const setFormSubmit = () => {
   });
 };
 
+initUserImage();
 setFormSubmit();
 
 export { openForm, closeForm };

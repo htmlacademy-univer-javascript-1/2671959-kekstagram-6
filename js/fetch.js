@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
+import { SERVER_URL } from './consts.js';
 
 const fetchPhotos = () => fetch(`${SERVER_URL}/data`)
   .then((response) => {
