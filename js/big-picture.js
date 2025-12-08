@@ -46,14 +46,10 @@ const renderComments = () => {
 
   commentsListElement.appendChild(fragment);
 
-  const commentsCountText = `${commentsToShow} из <span class="comments-count">${currentComments.length}</span> комментариев`;
+  const commentsCountText = `<span class="social__comment-shown-count">${commentsToShow}</span> из <span class="social__comment-total-count comments-count">${currentComments.length}</span> комментариев`;
   commentsCountElement.innerHTML = commentsCountText;
 
-  if (commentsToShow >= currentComments.length) {
-    commentsLoaderElement.classList.add('hidden');
-  } else {
-    commentsLoaderElement.classList.remove('hidden');
-  }
+  commentsLoaderElement.classList.toggle('hidden', commentsToShow >= currentComments.length);
 
   commentsShown = commentsToShow;
 };
@@ -66,6 +62,25 @@ const resetComments = () => {
   commentsShown = 0;
   currentComments = [];
   commentsLoaderElement.removeEventListener('click', onCommentsLoaderClick);
+};
+
+const closeBigPicture = () => {
+  bigPictureElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  resetComments();
+};
+
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    document.removeEventListener('keydown', onDocumentKeydown);
+    closeBigPicture();
+  }
+};
+
+const onCloseBigPictureClick = () => {
+  closeBigPicture();
+
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const openBigPicture = (photoData) => {
@@ -86,21 +101,9 @@ const openBigPicture = (photoData) => {
 
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeBigPicture = () => {
-  bigPictureElement.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  resetComments();
-};
-
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    closeBigPicture();
-  }
-};
-
-closeButtonElement.addEventListener('click', closeBigPicture);
-document.addEventListener('keydown', onDocumentKeydown);
+closeButtonElement.addEventListener('click', onCloseBigPictureClick);
 
 export { openBigPicture };

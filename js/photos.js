@@ -1,11 +1,11 @@
 import { openBigPicture } from './big-picture.js';
 
-const pictures = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const picturesElement = document.querySelector('.pictures');
+const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
 const renderPhoto = (picture) => {
   const { url, comments, likes, description, id } = picture;
-  const pictureElement = pictureTemplate.cloneNode(true);
+  const pictureElement = pictureTemplateElement.cloneNode(true);
 
   pictureElement.querySelector('.picture__img').src = url;
   pictureElement.querySelector('.picture__img').alt = description;
@@ -21,8 +21,8 @@ const renderPhoto = (picture) => {
 };
 
 const clearPhotos = () => {
-  const existingPhotos = pictures.querySelectorAll('.picture');
-  existingPhotos.forEach((photo) => photo.remove());
+  const existingPhotos = picturesElement.querySelectorAll('.picture');
+  existingPhotos.forEach((photoElement) => photoElement.remove());
 };
 
 const renderPhotos = (objects) => {
@@ -34,7 +34,7 @@ const renderPhotos = (objects) => {
     fragment.appendChild(renderPhoto(objects[i]));
   }
 
-  pictures.appendChild(fragment);
+  picturesElement.appendChild(fragment);
 };
 
 export { renderPhotos };

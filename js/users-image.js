@@ -1,12 +1,12 @@
 import { FILE_TYPES } from './consts.js';
 
-const fileChooser = document.querySelector('.img-upload__input');
-const preview = document.querySelector('.img-upload__preview img');
-const effectsPreviews = document.querySelectorAll('.effects__preview');
+const fileChooserElement = document.querySelector('.img-upload__input');
+const previewElement = document.querySelector('.img-upload__preview img');
+const effectsPreviewsElements = document.querySelectorAll('.effects__preview');
 
 const initUserImage = () => {
-  fileChooser.addEventListener('change', () => {
-    const file = fileChooser.files[0];
+  fileChooserElement.addEventListener('change', () => {
+    const file = fileChooserElement.files[0];
 
     if (!file) {
       return;
@@ -18,10 +18,10 @@ const initUserImage = () => {
     if (matches) {
       const imageUrl = URL.createObjectURL(file);
 
-      preview.src = imageUrl;
+      previewElement.src = imageUrl;
 
-      effectsPreviews.forEach((effectPreview) => {
-        effectPreview.style.backgroundImage = `url(${imageUrl})`;
+      effectsPreviewsElements.forEach((effectPreviewElement) => {
+        effectPreviewElement.style.backgroundImage = `url(${imageUrl})`;
       });
     }
   });
