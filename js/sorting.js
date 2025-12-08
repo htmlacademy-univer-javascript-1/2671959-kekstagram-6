@@ -8,8 +8,8 @@ const FilterType = {
   DISCUSSED: 'discussed'
 };
 
-const filtersContainer = document.querySelector('.img-filters');
-const filterButtons = filtersContainer.querySelectorAll('.img-filters__button');
+const filtersContainerElement = document.querySelector('.img-filters');
+const filterButtonsElement = filtersContainerElement.querySelectorAll('.img-filters__button');
 
 let currentPhotos = [];
 let currentFilter = FilterType.DEFAULT;
@@ -41,6 +41,9 @@ const onFilterChange = (evt) => {
     return;
   }
 
+  evt.stopPropagation();
+  evt.preventDefault();
+
   const clickedButton = evt.target;
   const newFilter = clickedButton.id.replace('filter-', '');
 
@@ -48,7 +51,9 @@ const onFilterChange = (evt) => {
     return;
   }
 
-  filterButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+  filterButtonsElement.forEach((button) => {
+    button.classList.remove('img-filters__button--active');
+  });
   clickedButton.classList.add('img-filters__button--active');
 
   currentFilter = newFilter;
@@ -58,8 +63,19 @@ const onFilterChange = (evt) => {
 
 const initSorting = (photos) => {
   currentPhotos = photos;
-  filtersContainer.classList.remove('img-filters--inactive');
-  filtersContainer.addEventListener('click', onFilterChange);
+  filtersContainerElement.classList.remove('img-filters--inactive');
+
+  const defaultButton = document.querySelector('#filter-default');
+  if (defaultButton) {
+    filterButtonsElement.forEach((btn) => {
+      btn.classList.remove('img-filters__button--active');
+    });
+    defaultButton.classList.add('img-filters__button--active');
+  }
+
+  currentFilter = 'filter-default';
+  filtersContainerElement.removeEventListener('click', onFilterChange);
+  filtersContainerElement.addEventListener('click', onFilterChange);
 };
 
-export { initSorting};
+export { initSorting };

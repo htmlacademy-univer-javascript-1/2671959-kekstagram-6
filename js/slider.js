@@ -1,13 +1,13 @@
 import { SCALE_STEP, SCALE_MIN, SCALE_MAX, SCALE_DEFAULT } from './consts.js';
 
-const scaleControl = document.querySelector('.scale__control--value');
-const scaleSmaller = document.querySelector('.scale__control--smaller');
-const scaleBigger = document.querySelector('.scale__control--bigger');
-const imagePreview = document.querySelector('.img-upload__preview img');
-const effectsList = document.querySelector('.effects__list');
-const effectLevel = document.querySelector('.effect-level');
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
+const scaleControlElement = document.querySelector('.scale__control--value');
+const scaleSmallerElement = document.querySelector('.scale__control--smaller');
+const scaleBiggerElement = document.querySelector('.scale__control--bigger');
+const imagePreviewElement = document.querySelector('.img-upload__preview img');
+const effectsListElement = document.querySelector('.effects__list');
+const effectLevelElement = document.querySelector('.effect-level');
+const effectLevelSliderElement = document.querySelector('.effect-level__slider');
+const effectLevelValueElement = document.querySelector('.effect-level__value');
 
 let currentScale = SCALE_DEFAULT;
 let currentEffect = 'none';
@@ -71,9 +71,9 @@ const effects = {
 
 const updateScale = (value) => {
   currentScale = value;
-  scaleControl.value = `${value}%`;
-  scaleControl.setAttribute('value', `${value}%`);
-  imagePreview.style.transform = `scale(${value / 100})`;
+  scaleControlElement.value = `${value}%`;
+  scaleControlElement.setAttribute('value', `${value}%`);
+  imagePreviewElement.style.transform = `scale(${value / 100})`;
 };
 
 const onScaleSmallerClick = () => {
@@ -87,7 +87,7 @@ const onScaleBiggerClick = () => {
 };
 
 const createSlider = () => {
-  noUiSlider.create(effectLevelSlider, {
+  noUiSlider.create(effectLevelSliderElement, {
     range: { min: 0, max: 100 },
     start: 100,
     step: 1,
@@ -102,35 +102,35 @@ const createSlider = () => {
 const updateSlider = (effect) => {
   const effectConfig = effects[effect];
 
-  effectLevelSlider.noUiSlider.updateOptions(effectConfig.options);
-  effectLevelSlider.noUiSlider.set(effectConfig.options.start);
+  effectLevelSliderElement.noUiSlider.updateOptions(effectConfig.options);
+  effectLevelSliderElement.noUiSlider.set(effectConfig.options.start);
 };
 
 const showSlider = () => {
-  effectLevel.classList.remove('hidden');
+  effectLevelElement.classList.remove('hidden');
 };
 
 const hideSlider = () => {
-  effectLevel.classList.add('hidden');
+  effectLevelElement.classList.add('hidden');
 };
 
 const updateEffect = (effect, value) => {
   const effectConfig = effects[effect];
 
   if (effect === 'none') {
-    imagePreview.style.filter = '';
+    imagePreviewElement.style.filter = '';
     hideSlider();
   } else {
-    imagePreview.style.filter = `${effectConfig.filter}(${value}${effectConfig.unit})`;
+    imagePreviewElement.style.filter = `${effectConfig.filter}(${value}${effectConfig.unit})`;
     showSlider();
   }
 
-  effectLevelValue.setAttribute('value', value);
-  effectLevelValue.value = value;
+  effectLevelValueElement.setAttribute('value', value);
+  effectLevelValueElement.value = value;
 };
 
 const onSliderUpdate = () => {
-  const value = effectLevelSlider.noUiSlider.get();
+  const value = effectLevelSliderElement.noUiSlider.get();
   updateEffect(currentEffect, value);
 };
 
@@ -143,15 +143,17 @@ const onEffectChange = (evt) => {
 };
 
 const initSlider = () => {
+  if (!effectLevelSliderElement.noUiSlider) {
+    createSlider();
+  }
+
   updateScale(SCALE_DEFAULT);
-  scaleSmaller.addEventListener('click', onScaleSmallerClick);
-  scaleBigger.addEventListener('click', onScaleBiggerClick);
+  scaleSmallerElement.addEventListener('click', onScaleSmallerClick);
+  scaleBiggerElement.addEventListener('click', onScaleBiggerClick);
+  effectLevelSliderElement.noUiSlider.on('update', onSliderUpdate);
+  effectsListElement.addEventListener('change', onEffectChange);
 
-  createSlider();
   hideSlider();
-  effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
-  effectsList.addEventListener('change', onEffectChange);
-
   currentEffect = 'none';
   updateEffect(currentEffect, effects.none.options.start);
 };
@@ -159,8 +161,22 @@ const initSlider = () => {
 const resetSlider = () => {
   updateScale(SCALE_DEFAULT);
   currentEffect = 'none';
+
+  if (effectLevelSliderElement.noUiSlider) {
+    effectLevelSliderElement.noUiSlider.updateOptions(effects.none.options);
+    effectLevelSliderElement.noUiSlider.set(effects.none.options.start);
+  }
+
   updateEffect(currentEffect, effects.none.options.start);
   hideSlider();
+
+  scaleSmallerElement.removeEventListener('click', onScaleSmallerClick);
+  scaleBiggerElement.removeEventListener('click', onScaleBiggerClick);
+  effectsListElement.removeEventListener('change', onEffectChange);
+
+  if (effectLevelSliderElement.noUiSlider) {
+    effectLevelSliderElement.noUiSlider.off('update');
+  }
 };
 
 export { initSlider, resetSlider };
